@@ -16,4 +16,29 @@ defmodule CompressionTest do
 
     assert expected == KafkaEx.Compression.decompress(2, data)
   end
+
+  describe "lz4" do
+    test "decompress already compressed file" do
+      data = Path.join(__DIR__, "hound.txt") |> File.read!()
+
+      {:ok, compressed_data} =
+        Path.join(__DIR__, "hound.txt.lz4") |> File.read()
+
+      decompressed_data = KafkaEx.Compression.decompress(3, compressed_data)
+
+      assert data == decompressed_data
+    end
+
+    test "data |> compress |> decompress == data" do
+      data = Path.join(__DIR__, "hound.txt") |> File.read!()
+
+      {compressed_data, 3} = KafkaEx.Compression.compress(:lz4, data)
+
+      decompressed_data = KafkaEx.Compression.decompress(3, compressed_data)
+
+      assert byte_size(compressed_data) < byte_size(decompressed_data)
+
+      assert decompressed_data == data
+    end
+  end
 end

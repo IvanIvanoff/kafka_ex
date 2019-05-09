@@ -35,12 +35,13 @@ defmodule KafkaEx.Mixfile do
 
   defp deps do
     [
-      {:credo, "~> 0.8.10", only: :dev},
-      {:dialyxir, "~> 1.0.0-rc.3", only: :dev},
-      {:excoveralls, "~> 0.7", only: :test},
-      {:ex_doc, "~> 0.18", only: :dev},
+      {:credo, "~> 1.0", only: :dev},
+      {:dialyxir, "~> 1.0.0-rc.6", only: :dev},
+      {:excoveralls, "~> 0.11", only: :test},
+      {:ex_doc, "~> 0.20", only: :dev},
       {:snappy,
-       git: "https://github.com/fdmanana/snappy-erlang-nif", only: [:dev, :test]}
+       git: "https://github.com/fdmanana/snappy-erlang-nif", only: [:dev, :test]},
+      {:lz4, github: "rabbitmq/lz4-erlang", only: [:dev, :test]}
     ]
   end
 
